@@ -57,10 +57,6 @@ public class Main extends AppCompatActivity {
         requestForDoNotDisturbPermissionOrSetDoNotDisturbForApi23AndUp();
     }
 
-    public void mutePnone(View view) {
-        requestForDoNotDisturbPermissionOrSetDoNotDisturbForApi23AndUp();
-    }
-
     public void unmute() {
         AudioManager audioManager = (AudioManager)getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
