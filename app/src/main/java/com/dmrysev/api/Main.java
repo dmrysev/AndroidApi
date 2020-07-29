@@ -26,19 +26,35 @@ public class Main extends AppCompatActivity {
         }
         finish();
     }
+    private void requestMutePermissions() {
+        try {
+            if (Build.VERSION.SDK_INT < 23) {
+                AudioManager audioManager = (AudioManager)getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+                audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+            } else if( Build.VERSION.SDK_INT >= 23 ) {
+                this.requestForDoNotDisturbPermissionOrSetDoNotDisturbForApi23AndUp();
+            }
+        } catch ( SecurityException e ) {
 
-    private void requestForDoNotDisturbPermission() {
+        }
+    }
+
+    private void requestForDoNotDisturbPermissionOrSetDoNotDisturbForApi23AndUp() {
+
         NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         // if user granted access else ask for permission
-        if (!notificationManager.isNotificationPolicyAccessGranted()) {
+        if ( notificationManager.isNotificationPolicyAccessGranted()) {
+            AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+            audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        } else{
+            // Open Setting screen to ask for permisssion
             Intent intent = new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
             startActivityForResult( intent, 0 );
         }
     }
 
     public void mute() {
-        AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        requestForDoNotDisturbPermissionOrSetDoNotDisturbForApi23AndUp();
     }
 
     public void unmute() {
