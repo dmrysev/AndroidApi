@@ -8,7 +8,7 @@ import android.media.AudioManager;
 public class Mute extends IntentService {
 
     public Mute() {
-        super("MyService");
+        super("Mute");
     }
 
     @Override
@@ -16,14 +16,8 @@ public class Mute extends IntentService {
         mute();
     }
     
-    public void mute() {
+    void mute() {
         AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
     }
-
-    public void unmute() {
-        AudioManager audioManager = (AudioManager)getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-    }
-
 }

@@ -21,6 +21,9 @@
         <service
             android:name=".Mute"
             android:exported="true"/>
+        <service
+            android:name=".Unmute"
+            android:exported="true"/>
     </application>
 
 </manifest>
